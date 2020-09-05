@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Spyder Editor
 
-This is a temporary script file.
-"""
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -30,7 +25,7 @@ class Babybot:
           # creates the peaking effect shown in data, the movements peak around 35 and then decrease to around 30 (fatigue, boredom)
           self.ranges[limb] += self.reward - self.expectation[limb]
 
-    elif self.connected == False: # disconnected
+    else: # disconnected
 
       # the expectation for a reward will increase movement when reward is not given (frustration)
       for limb in range(len(self.limbs)):
