@@ -1,7 +1,7 @@
 
 # Mobile-Paradigm and Extinction Bursts
   
-#  The Mobile-Paradigm was origninally introduced by Rovee & Rovee in 1969, as a way to measure the effects of conjugate reinforcement on infants.
+#  The Mobile-Paradigm was originally introduced by Rovee & Rovee in 1969, as a way to measure the effects of conjugate reinforcement on infants.
 # In the study, the limb movements of 10-week-old infants were recorded during three different periods: the baseline period, the connected period, and
 # the disconnected period. During the baseline period, infants were sat in a crib, below a still mobile. The connected period then immediately followed,
 # in which one limb was connected to the mobile, allowing the infant to move the mobile and recieve a visual reward if they moved the connected limb. 
