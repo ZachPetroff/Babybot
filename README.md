@@ -13,4 +13,4 @@
 #   This unexpected phenomena is now known as an "extinction burst", and occurs whenever a vending machine eats your dollar without returning a snack or 
 # your web page fails to open after the first click. Quickly, torrents of button-presses and mouse-clicks follow, in the absence of the contingent reward.
 # The code within this repository attempts to explore how extinction bursts arise: the cognitive mechanisms, the physical systems, and the interplay 
-# between the two. 
+ between the two. 
