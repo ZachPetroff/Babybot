@@ -22,12 +22,12 @@ class Mobile:
         self.moving = False
 
 class Babybot:
-  def __init__(self, rates=[20, 20, 20, 20], reward=.06, punishment=.06, expectation_growth=6e-9,
+  def __init__(self, rates=[20, 20, 20, 20], reward=.06, cost=.06, expectation_growth=6e-9,
       expectation_decay=1.5, connected=False, connected_limb="right arm", timestep=1/60,
       non_contigent=False, nc_rate=.8, mobile_on=True, mobile_window=0.025):
     self.rates = rates # rates per minute of each limb moving
     self.reward = reward # boost in rate per minute for each rewarded movement
-    self.punishment = punishment # removal of rate per minute for each non-rewarded movement
+    self.cost = cost # removal of rate per minute for each non-rewarded movement
     self.expectation = [0, 0, 0, 0] # subtracted from both reward and punishment
     self.expectation_growth = expectation_growth # growth of expectation for each rewarded movement
     self.expectation_decay = expectation_decay # decay of expectation for each non-rewarded movement
@@ -44,7 +44,7 @@ class Babybot:
     self.mobile = Mobile(mobile_window) # An object created from the mobile class
     self.rates_moving = list(rates) # If the mobile dynamics are included, this keeps track of the rates while the mobile is moving
     
-  def update_ranges(self, moves):
+  def update_rates(self, moves):
     # if the limb is connected, a reward is given and expectation for a reward grows
     if (self.connected and moves[self.connected_limb] and not self.mobile.moving) \
       or (self.non_contigent and np.random.random() < self.nc_rate  # if the extinction period is non contingent
@@ -62,14 +62,14 @@ class Babybot:
             
     elif self.mobile.moving:
       for limb in range(len(self.limbs)):
-          self.rates_moving[limb] -= (self.punishment - self.expectation[limb]) * moves[limb] 
+          self.rates_moving[limb] -= (self.cost - self.expectation[limb]) * moves[limb] 
           self.expectation[limb] -= self.expectation_decay * moves[limb] # creates decrease in movement at the end of the disconnected state
           if self.expectation[limb] < 0: self.expectation[limb] = 0  # the expectation can never be negative
         
     else: # disconnected
       # the expectation for a reward will increase movement when reward is not given (frustration)
       for limb in range(len(self.limbs)):
-          self.rates[limb] -= (self.punishment - self.expectation[limb]) * moves[limb]
+          self.rates[limb] -= (self.cost - self.expectation[limb]) * moves[limb]
           self.expectation[limb] -= self.expectation_decay * moves[limb] # creates decrease in movement at the end of the disconnected state
           if self.expectation[limb] < 0: self.expectation[limb] = 0
 
@@ -93,7 +93,7 @@ class Babybot:
       else:
         move = np.random.poisson(rate_per_timestep)
       moves.append(move)
-    self.update_ranges(moves)
+    self.update_rates(moves)
     return moves
 
   def one_cycle(self, n_minutes=25, connected=[False]*4+[True]*16+[False]*5):
