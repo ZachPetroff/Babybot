@@ -15,7 +15,8 @@ def plot_movements(seperations, connection_changes, mins, ram_mean, lam_mean, rl
             plt.xlabel("Minutes")
             plt.title("Session {}".format(seperation) + "\n" + "Disconnected" + " "*15 + "Connected" + " "*15 + "Disconnected")
             plt.show()
-            
+           
+        
 def plot_minute(minute, cms, mms, timestep):
     steps_per_min = 1 / timestep
     
