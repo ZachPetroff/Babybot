@@ -1,5 +1,3 @@
-%matplotlib inline
-import matplotlib
 import matplotlib.pyplot as plt
 
 def plot_movements(seperations, connection_changes, mins, ram_mean, lam_mean, rlm_mean, llm_mean):
