@@ -46,5 +46,3 @@ def plot_expectation(mins, reward, rae_mean, lae_mean, rle_mean, lle_mean):
 
     plt.legend()
     plt.show()
-    
-plt.plot(1, 1, 'ro')
