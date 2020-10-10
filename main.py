@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
 class Mobile:
   def __init__(self, average_window=.5):
