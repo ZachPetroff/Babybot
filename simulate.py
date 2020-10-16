@@ -83,5 +83,3 @@ def simulate(num_infants=100, num_sessions=1, timestep=1/120,
     seperations.append(len(connection))
     
     return seperations, connection_changes, mins, ram_mean, lam_mean, rlm_mean, llm_mean, reward, rae_mean, lae_mean, rle_mean, lle_mean, norm_rates, moving_rates, cms, mms, timestep
-
-simulate()
