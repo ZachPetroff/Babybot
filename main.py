@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 class Mobile:
   def __init__(self, average_window=.5):
@@ -21,10 +22,11 @@ class Mobile:
         self.moving = False
 
 class Babybot:
-  def __init__(self, rates=[20, 20, 20, 20], reward=.06, cost=.06, expectation_growth=6e-9,
+  def __init__(self, baseline_rates=[20, 20, 20, 20], reward=.06, cost=.06, expectation_growth=6e-9,
       expectation_decay=1.5, connected=False, connected_limb="right arm", timestep=1/60,
       non_contigent=False, nc_rate=.8, mobile_on=True, mobile_window=0.025):
-    self.rates = rates # rates per minute of each limb moving
+    self.baseline_rates = baseline_rates
+    self.rates = baseline_rates # rates per minute of each limb moving
     self.reward = reward # boost in rate per minute for each rewarded movement
     self.cost = cost # removal of rate per minute for each non-rewarded movement
     self.expectation = [0, 0, 0, 0] # subtracted from both reward and punishment
@@ -41,7 +43,7 @@ class Babybot:
     
     self.mobile_on = mobile_on # Determines whether the actions of the mobile will be taken into account
     self.mobile = Mobile(mobile_window) # An object created from the mobile class
-    self.rates_moving = list(rates) # If the mobile dynamics are included, this keeps track of the rates while the mobile is moving
+    self.rates_moving = list(baseline_rates) # If the mobile dynamics are included, this keeps track of the rates while the mobile is moving
     
   def update_rates(self, moves):
     # if the limb is connected, a reward is given and expectation for a reward grows
@@ -54,7 +56,7 @@ class Babybot:
         
         self.expectation[limb] += self.expectation_growth * moves[limb]  
         
-        self.rates = np.clip(self.rates, 0 , 45)  # sets a minimum of 0 and a maximum of 45 for the rates
+        self.rates = np.clip(self.rates, self.baseline_rates[limb] , 45)  # sets a minimum of 0 and a maximum of 45 for the rates
         
       if self.mobile_on == True:
         self.mobile.create_window()  #  when the connected limb moves, this causes the mobile to move
@@ -64,13 +66,17 @@ class Babybot:
           self.rates_moving[limb] -= (self.cost - self.expectation[limb]) * moves[limb] 
           self.expectation[limb] -= self.expectation_decay * moves[limb] # creates decrease in movement at the end of the disconnected state
           if self.expectation[limb] < 0: self.expectation[limb] = 0  # the expectation can never be negative
-        
+          
+          self.rates = np.clip(self.rates, self.baseline_rates[limb] , 45)
+          
     else: # disconnected
       # the expectation for a reward will increase movement when reward is not given (frustration)
       for limb in range(len(self.limbs)):
           self.rates[limb] -= (self.cost - self.expectation[limb]) * moves[limb]
           self.expectation[limb] -= self.expectation_decay * moves[limb] # creates decrease in movement at the end of the disconnected state
           if self.expectation[limb] < 0: self.expectation[limb] = 0
+        
+          self.rates = np.clip(self.rates, self.baseline_rates[limb] , 45)
 
   def move(self):
     if self.mobile_on == True:
@@ -142,5 +148,50 @@ class Babybot:
 
      
     return r_arm_moves, l_arm_moves, r_leg_moves, l_leg_moves, r_arm_expectations, l_arm_expectations, r_leg_expectations, l_leg_expectations, mins, connected_moves, self.mobile.moves, nr, mr
+
+def plot_movements(seperations, connection_changes, mins, ram_mean, lam_mean, rlm_mean, llm_mean):
+    for seperation in range(len(seperations)):
+        if seperation != 0:
+            plt.plot(mins[seperations[seperation-1]:seperations[seperation]], ram_mean[seperations[seperation-1]:seperations[seperation]], 'red', label="Connected Limb Movements")
+            plt.plot(mins[seperations[seperation-1]:seperations[seperation]], lam_mean[seperations[seperation-1]:seperations[seperation]], 'black', label="Disconnected Limb Movements")
+            plt.plot(mins[seperations[seperation-1]:seperations[seperation]], rlm_mean[seperations[seperation-1]:seperations[seperation]], 'black')
+            plt.plot(mins[seperations[seperation-1]:seperations[seperation]], llm_mean[seperations[seperation-1]:seperations[seperation]], 'black')
+            plt.legend()
+
+            for loc in list(connection_changes)+[len(mins)]:
+                plt.axvline(loc, color='black', linestyle='dashed')
+            plt.xlim(seperations[seperation-1], seperations[seperation])
+            plt.ylim(0, None)
+            plt.ylabel("Movements")
+            plt.xlabel("Minutes")
+            plt.title("Session {}".format(seperation) + "\n" + "Disconnected" + " "*15 + "Connected" + " "*15 + "Disconnected")
+            plt.show()
+            
+def plot_minute(minute, cms, mms, timestep):
+    steps_per_min = 1 / timestep
+    
+    cms_slice = cms[int(minute * steps_per_min):int((minute * steps_per_min) + steps_per_min)]
+    mms_slice = mms[int(minute * steps_per_min):int((minute * steps_per_min) + steps_per_min)]
+    
+    steps_per_min = np.arange(0, steps_per_min)
+    
+    plt.plot(steps_per_min, cms_slice, "red", label="Connected Limb Movements")
+    plt.plot(steps_per_min, mms_slice, "black", label="Mobile Movements")
+    plt.legend(bbox_to_anchor=(1.6, 1))
+    plt.title("Minute {}".format(str(minute)))
+    plt.show()
+    
+def plot_expectation(mins, reward, rae_mean, lae_mean, rle_mean, lle_mean):
+    plt.plot(mins, rae_mean, 'red', label="Connected Limbs")
+    plt.plot(mins, lae_mean, "black", label="Disconnected Limbs")
+    plt.plot(mins, rle_mean, "black")
+    plt.plot(mins, lle_mean, "black")
+    plt.xlabel("Minutes")
+    plt.ylabel("Expectation")
+    plt.title("Expectation Over Time")
+    plt.plot([0, 60], [reward, reward], "yellow", label="Reward")
+
+    plt.legend()
+    plt.show()
     
 
