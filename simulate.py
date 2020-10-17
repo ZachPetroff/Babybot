@@ -38,6 +38,8 @@ def simulate(num_infants=100, num_sessions=1, timestep=1/120, baseline_time=10, 
     norm_rates = np.zeros((n_minutes,))
     moving_rates = np.zeros((n_minutes,))
     
+    rates=rates
+    
     for infant in range(num_infants):
         babybot = main.Babybot(rates=rates,reward=reward,cost=cost,expectation_growth=expectation_growth,expectation_decay=expectation_decay, timestep=timestep, mobile_on=mobile_on)
         
