@@ -15,7 +15,8 @@ def plot_movements(seperations, connection_changes, mins, ram_mean, lam_mean, rl
             plt.xlim(seperations[seperation-1], seperations[seperation])
             plt.ylabel("Movements")
             plt.xlabel("Minutes")
-            plt.title("Session {}".format(seperation) + "\n" + "Baseline" + " "*15 + "Connect" + " "*15 + "Disconnect")
+            plt.ylim(0,None)
+            plt.title("Session {}".format(seperation) + "\n" + "Baseline" + " "*17 + "Connect" + " "*17 + "Disconnect")
             plt.show()
            
         
