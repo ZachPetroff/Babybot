@@ -41,7 +41,7 @@ def simulate(rates, num_infants=100, num_sessions=1, timestep=1/120, baseline_ti
     rates=rates
     
     for infant in range(num_infants):
-        babybot = main.Babybot(rates=rates,reward=reward,cost=cost,expectation_growth=expectation_growth,expectation_decay=expectation_decay, timestep=timestep, mobile_on=mobile_on)
+        babybot = main.Babybot(baseline_rates=rates,reward=reward,cost=cost,expectation_growth=expectation_growth,expectation_decay=expectation_decay, timestep=timestep, mobile_on=mobile_on)
         
         ram, lam, rlm, llm, rae, lae, rle, lle, mins, cms, mms, nr, mr = babybot.one_cycle(n_minutes, connection)
         ram_mean += ram
