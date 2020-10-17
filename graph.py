@@ -13,7 +13,6 @@ def plot_movements(seperations, connection_changes, mins, ram_mean, lam_mean, rl
             for loc in list(connection_changes)+[len(mins)]:
                 plt.axvline(loc, color='black', linestyle='dashed')
             plt.xlim(seperations[seperation-1], seperations[seperation])
-            plt.ylim(0, None)
             plt.ylabel("Movements")
             plt.xlabel("Minutes")
             plt.title("Session {}".format(seperation) + "\n" + "Baseline" + " "*15 + "Connect" + " "*15 + "Disconnect")
