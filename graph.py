@@ -48,8 +48,8 @@ def plot_expectation(mins, reward, rae_mean, lae_mean, rle_mean, lle_mean):
     plt.show()
     
 def plot_rates(mins, norm_rates, moving_rates):
-    plt.plot(mins, norm_rates, label="Rates Not Moving")
-    plt.plot(mins, moving_rates, label="Rates Moving")
+    plt.plot(mins, norm_rates, label="Rates Not Moving", color="red")
+    plt.plot(mins, moving_rates, label="Rates Moving", color="black")
     plt.legend()
     plt.xlabel("Minutes")
     plt.ylabel("Rates")
