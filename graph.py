@@ -42,7 +42,7 @@ def plot_expectation(mins, reward, rae_mean, lae_mean, rle_mean, lle_mean):
     plt.xlabel("Minutes")
     plt.ylabel("Expectation")
     plt.title("Expectation Over Time")
-    plt.plot([0, 60], [reward, reward], "yellow", label="Reward")
+    plt.plot([0, 60], [reward, reward], "black", label="Reward", linestyle="dashed")
 
     plt.legend()
     plt.show()
