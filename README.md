@@ -15,6 +15,16 @@
  The code within this repository attempts to explore how extinction bursts arise: the cognitive mechanisms, the physical systems, and the interplay 
  between the two.
  
+ # Violation of Expectancy and Frustration
+  In many of the Mobile-Paradigm studies that followed the original, researchers reported frustration on the faces of the infants during
+disconnect phase. This seems to be an appropriate response, if one expects a reward following a certain action and that reward is not given,
+the most obvious reaction is that of frustration. Thus, one way we modeled extinction bursts is by modeling frustration in terms of 
+violation of expectancy. Once the limb is connected and the infant begins to acquire a reward, they also begin to acquire an expectation 
+for that reward. While the reward is still given, the expectation works against the reward, due to boredom or disinterest. However, when the 
+reward is no longer given, feelings of frustration begin to bubble-up. We all have things in our life that we take forgranted, 
+small rewards, that in their absence, fill us with a greater want than when they were attainable. This was the intuition behind this model
+of the "babybot".
+ 
  # Mobile Dynamics
   The intuition behind this approach is that there are certain times during the connected phase when there is
   no additional reward for moving the connected limb; rather, there is a cost. The contingent reward for the connected
