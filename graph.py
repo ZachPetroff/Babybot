@@ -34,15 +34,16 @@ def plot_minute(minute, cms, mms, timestep):
     plt.title("Minute {}".format(str(minute)))
     plt.show()
     
-def plot_expectation(mins, reward, rae_mean, lae_mean, rle_mean, lle_mean):
-    plt.plot(mins, rae_mean, 'red', label="Connected Limbs")
+def plot_expectation(mins, reward, cost, rae_mean, lae_mean, rle_mean, lle_mean):
+    plt.plot(mins, rae_mean, 'red', label="Connected Limb")
     plt.plot(mins, lae_mean, "black", label="Disconnected Limbs")
     plt.plot(mins, rle_mean, "black")
     plt.plot(mins, lle_mean, "black")
     plt.xlabel("Minutes")
     plt.ylabel("Expectation")
     plt.title("Expectation Over Time")
-    plt.plot([0, 60], [reward, reward], "black", label="Reward", linestyle="dashed")
+    plt.plot([0, None], [reward, reward], "black", label="Reward", linestyle="dashed")
+    plt.plot([0, None], [cost, cost], "black", label="Cost", linestyle="dotted")
 
     plt.legend()
     plt.show()
