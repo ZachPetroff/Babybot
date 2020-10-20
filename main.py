@@ -22,12 +22,15 @@ class Mobile:
         self.moving = False
 
 class Babybot:
-  def __init__(self, baseline_rates=[20, 20, 20, 20], reward=.06, cost=.06, expectation_growth=6e-9,
+  def __init__(self, baseline_rates=[20, 20, 20, 20], reward=.06, reward_flux=0, cost=.06, expectation_growth=6e-9,
       expectation_decay=1.5, connected=False, connected_limb="right arm", timestep=1/60,
       non_contigent=False, nc_rate=.8, mobile_on=True, mobile_window=0.025):
     self.baseline_rates = baseline_rates
     self.rates = baseline_rates # rates per minute of each limb moving
-    self.reward = reward # boost in rate per minute for each rewarded movement
+    if mobile_on:
+        self.reward = [reward, reward_flux]  # reward is the center of the distribution and reward_flux is the scale or width of the distribution
+    else:
+        self.reward = [reward, mobile_window]
     self.cost = cost # removal of rate per minute for each non-rewarded movement
     self.expectation = [0, 0, 0, 0] # subtracted from both reward and punishment
     self.expectation_growth = expectation_growth # growth of expectation for each rewarded movement
@@ -52,7 +55,7 @@ class Babybot:
           and not self.connected and (self.expectation > 0).any()): # reward state
       for limb in range(len(self.limbs)):
         # creates the peaking effect shown in data, the movements peak around 35 and then decrease to around 30 (fatigue, boredom)
-        self.rates[limb] += (self.reward - self.expectation[limb]) * moves[limb]  # increases rates if reward > expectation, decreases otherwise
+        self.rates[limb] += (np.random.uniform(self.reward[0], self.reward[1]) - self.expectation[limb]) * moves[limb]  # increases rates if reward > expectation, decreases otherwise
         
         self.expectation[limb] += self.expectation_growth * moves[limb]  
         
