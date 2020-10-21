@@ -55,7 +55,7 @@ class Babybot:
           and not self.connected and (self.expectation > 0).any()): # reward state
       for limb in range(len(self.limbs)):
         # creates the peaking effect shown in data, the movements peak around 35 and then decrease to around 30 (fatigue, boredom)
-        self.rates[limb] += (np.random.uniform(self.reward[0], self.reward[1]) - self.expectation[limb]) * moves[limb]  # increases rates if reward > expectation, decreases otherwise
+        self.rates[limb] += (np.random.normal(self.reward[0], self.reward[1]) - self.expectation[limb]) * moves[limb]  # increases rates if reward > expectation, decreases otherwise
         
         self.expectation[limb] += self.expectation_growth * moves[limb]  
         
