@@ -81,4 +81,8 @@ def simulate(rates, num_infants=100, num_sessions=1, timestep=1/120, baseline_ti
     
     seperations.append(len(connection))
     
-    return seperations, connection_changes, mins, ram_mean, lam_mean, rlm_mean, llm_mean, reward, rae_mean, lae_mean, rle_mean, lle_mean, norm_rates, moving_rates, cms, mms, timestep
+    return {"seperations":seperations, "connection changes": connection_changes, "minutes": mins, "right arm movements": ram_mean, "left arm movements": lam_mean, "right leg movements": rlm_mean, "left leg movements": llm_mean, "reward": reward, "right arm expectations": rae_mean, "left arm expectations": lae_mean, "right leg expectations": rle_mean, "left leg expectations": lle_mean, "still mobile rates": norm_rates, "moving mobile rates": moving_rates, "connect limb movements per timestep": cms, "mobile movements per timestep": mms, "timestep": timestep}
+
+def display_output(output):
+    for key, value in output.items():
+        print(key)
