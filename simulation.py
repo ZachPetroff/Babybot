@@ -1,7 +1,7 @@
 import numpy as np
 import main
 
-def simulate(rates, num_infants=100, num_sessions=1, timestep=1/120, baseline_time=10, aquisition_time=30, extinction_time=20, reward=.06, reward_flux=0, cost=.0075, expectation_growth=1e-4, expectation_decay=3e-4, mobile_on=False):
+def simulate(rates, num_infants=100, num_sessions=1, timestep=1/120, baseline_time=10, aquisition_time=20, extinction_time=15, reward=2e-2, reward_flux=0, cost=3.5e-2, expectation_growth=0, expectation_decay=0, mobile_on=False):
     
     connection = np.array([False]*baseline_time+[True]*aquisition_time+[False]*extinction_time)  # connection for each minute
     for session in range(num_sessions-1):
