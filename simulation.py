@@ -72,16 +72,16 @@ def simulate(rates, num_infants=100, num_sessions=1, timestep=1/120, baseline_ti
 
     connection_changes = np.where(connection[1:]^connection[:-1])[0]
 
-    seperations = [0]
+    separations = [0]
 
     if len(connection_changes) > 2:
         for change in range(len(connection_changes)):
             if change % 2 == 0 and change != 0:
-                seperations.append(int(connection_changes[change] - ((connection_changes[change] - connection_changes[change-1])/2)))
+                separations.append(int(connection_changes[change] - ((connection_changes[change] - connection_changes[change-1])/2)))
     
-    seperations.append(len(connection))
+    separations.append(len(connection))
     
-    return {"seperations":seperations, "connection changes": connection_changes, "minutes": mins, "right arm movements": ram_mean, "left arm movements": lam_mean, "right leg movements": rlm_mean, "left leg movements": llm_mean, "reward": reward, "right arm expectations": rae_mean, "left arm expectations": lae_mean, "right leg expectations": rle_mean, "left leg expectations": lle_mean, "still mobile rates": norm_rates, "moving mobile rates": moving_rates, "connect limb movements per timestep": cms, "mobile movements per timestep": mms, "timestep": timestep}
+    return {"separations":separations, "connection changes": connection_changes, "minutes": mins, "right arm movements": ram_mean, "left arm movements": lam_mean, "right leg movements": rlm_mean, "left leg movements": llm_mean, "reward": reward, "right arm expectations": rae_mean, "left arm expectations": lae_mean, "right leg expectations": rle_mean, "left leg expectations": lle_mean, "still mobile rates": norm_rates, "moving mobile rates": moving_rates, "connect limb movements per timestep": cms, "mobile movements per timestep": mms, "timestep": timestep}
 
 def display_output(output):
     for key, value in output.items():
