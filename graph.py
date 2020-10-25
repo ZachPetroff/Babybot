@@ -1,3 +1,7 @@
+# (C) 2020 Zachary Petroff, Indiana University Bloomington
+# This code block is released under MIT license. Feel free to make use of
+# this code in any projects so long as you reproduce this text.
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -18,10 +22,6 @@ def plot_movements(seperations, connection_changes, mins, ram_mean, lam_mean, rl
             plt.ylim(0,None)
             plt.title("Session {}".format(seperation) + "\n" + "Baseline" + " "*17 + "Connect" + " "*17 + "Disconnect")
             plt.show()
-           
-# (C) 2020 Zachary Petroff, Indiana University Bloomington
-# This code block is released under MIT license. Feel free to make use of
-# this code in any projects so long as you reproduce this text.
 
 def plot_minute(minute, cms, mms, timestep):
     steps_per_min = 1 / timestep
