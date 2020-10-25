@@ -3,13 +3,22 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def plot_movements(seperations, connection_changes, mins, ram_mean, lam_mean, rlm_mean, llm_mean):
+def plot_movements(seperations, connection_changes, mins, ram_mean, lam_mean, rlm_mean, llm_mean, connected_limb_index=0):
+    colors = []
+    labels = []
+    for limb in range(4):
+        if connected_limb_index == limb:
+            colors.append("red")
+            labels.append("Connected Limb Movements")
+        else:
+            colors.append("black")
+            labels.append("Disconnected Limb Movements")
     for seperation in range(len(seperations)):
         if seperation != 0:
-            plt.plot(mins[seperations[seperation-1]:seperations[seperation]], ram_mean[seperations[seperation-1]:seperations[seperation]], 'red', label="Connected Limb Movements")
-            plt.plot(mins[seperations[seperation-1]:seperations[seperation]], lam_mean[seperations[seperation-1]:seperations[seperation]], 'black', label="Disconnected Limb Movements")
-            plt.plot(mins[seperations[seperation-1]:seperations[seperation]], rlm_mean[seperations[seperation-1]:seperations[seperation]], 'black')
-            plt.plot(mins[seperations[seperation-1]:seperations[seperation]], llm_mean[seperations[seperation-1]:seperations[seperation]], 'black')
+            plt.plot(mins[seperations[seperation-1]:seperations[seperation]], ram_mean[seperations[seperation-1]:seperations[seperation]], colors[0], label=labels[0])
+            plt.plot(mins[seperations[seperation-1]:seperations[seperation]], lam_mean[seperations[seperation-1]:seperations[seperation]], colors[1], label=labels[1])
+            plt.plot(mins[seperations[seperation-1]:seperations[seperation]], rlm_mean[seperations[seperation-1]:seperations[seperation]], colors[2])
+            plt.plot(mins[seperations[seperation-1]:seperations[seperation]], llm_mean[seperations[seperation-1]:seperations[seperation]], colors[3])
             plt.legend()
 
             for loc in list(connection_changes)+[len(mins)]:
@@ -35,11 +44,20 @@ def plot_minute(minute, cms, mms, timestep):
     plt.title("Minute {}".format(str(minute)))
     plt.show()
     
-def plot_expectation(mins, reward, cost, rae_mean, lae_mean, rle_mean, lle_mean):
-    plt.plot(mins, rae_mean, 'red', label="Connected Limb")
-    plt.plot(mins, lae_mean, "black", label="Disconnected Limbs")
-    plt.plot(mins, rle_mean, "black")
-    plt.plot(mins, lle_mean, "black")
+def plot_expectation(mins, reward, cost, rae_mean, lae_mean, rle_mean, lle_mean, connected_limb_index=1):
+    colors = []
+    labels = []
+    for limb in range(4):
+        if connected_limb_index == limb:
+            colors.append("red")
+            labels.append("Connected Limb Movements")
+        else:
+            colors.append("black")
+            labels.append("Disconnected Limb Movements")
+    plt.plot(mins, rae_mean, colors[0], label=labels[0])
+    plt.plot(mins, lae_mean, colors[1], label=labels[1])
+    plt.plot(mins, rle_mean, colors[2])
+    plt.plot(mins, lle_mean, colors[3])
     plt.xlabel("Minutes")
     plt.ylabel("Expectation")
     plt.title("Expectation Over Time")
