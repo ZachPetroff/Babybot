@@ -1,6 +1,4 @@
 # (C) 2020 Zachary Petroff, Indiana University Bloomington
-# This code block is released under MIT license. Feel free to make use of
-# this code in any projects so long as you reproduce this text.
 
 import numpy as np
 
@@ -56,7 +54,7 @@ class Babybot:
       for limb in range(len(self.limbs)):
         # creates the peaking effect shown in data, the movements peak around 35 and then decrease to around 30 (fatigue, boredom)
         
-        if self.mobile_on and self.reward_flux != 0:
+        if self.mobile_on and self.reward[1] != 0:      # determines whether reward is static or continuous for mobile experiments
             self.reward[0] = self.mobile.reward_window
         
         self.rates[limb] += (np.random.normal(self.reward[0], self.reward[1]) - self.expectation[limb]) * moves[limb]  # increases rates if reward > expectation, decreases otherwise
