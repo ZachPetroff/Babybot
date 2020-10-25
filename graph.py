@@ -1,6 +1,4 @@
 # (C) 2020 Zachary Petroff, Indiana University Bloomington
-# This code block is released under MIT license. Feel free to make use of
-# this code in any projects so long as you reproduce this text.
 
 import matplotlib.pyplot as plt
 import numpy as np
