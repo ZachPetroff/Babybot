@@ -25,7 +25,7 @@ class Mobile:
 class Babybot:
   def __init__(self, baseline_rates=[20, 20, 20, 20], reward=.06, reward_flux=0, cost=.06, expectation_growth=6e-9,
       expectation_decay=1.5, connected=False, connected_limb="right arm", timestep=1/60,
-      non_contigent=False, nc_rate=.8, mobile_on=True, mobile_window=0.025, reversal=False):
+      non_contigent=False, nc_rate=.8, mobile_on=True, mobile_window=0.025, reversal=False, learning_lag=1):
     self.baseline_rates = baseline_rates
     self.rates = baseline_rates # rates per minute of each limb moving
     if mobile_on and reward_flux != 0: # reward is the center of the distribution and reward_flux is the scale or width of the distribution
@@ -50,6 +50,7 @@ class Babybot:
     self.rates_moving = list(baseline_rates) # If the mobile dynamics are included, this keeps track of the rates while the mobile is moving
     
     self.reversal = reversal
+    self.learning_lag = learning_lag
     
   def update_rates(self, moves):
     # if the limb is connected, a reward is given and expectation for a reward grows
@@ -104,7 +105,6 @@ class Babybot:
       else:
         move = np.random.poisson(rate_per_timestep)
       moves.append(move)
-    self.update_rates(moves)
     return moves
 
   def one_cycle(self, n_minutes=25, connected=False, non_contigent=False):
@@ -141,6 +141,8 @@ class Babybot:
                   
       for step in range(steps_per_min):
         moves = self.move()
+        if step % self.learning == 0:
+            self.update_ranges(moves)
         connected_moves.append(moves[self.connected_limb])
         
         if self.mobile.moving:           # updates mobile moves: 1 = moving, 0 = not moving
