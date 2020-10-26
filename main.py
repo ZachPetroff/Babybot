@@ -49,8 +49,7 @@ class Babybot:
   def update_rates(self, moves):
     # if the limb is connected, a reward is given and expectation for a reward grows
     if (self.connected and moves[self.connected_limb] and not self.mobile.moving) \
-      or (self.non_contigent and np.random.random() < self.nc_rate  # if the extinction period is non contingent
-          and not self.connected and (self.expectation > 0).any()): # reward state
+      or (self.non_contigent and np.random.random() < self.nc_rate):  # if the extinction period is non contingent 
       for limb in range(len(self.limbs)):
         # creates the peaking effect shown in data, the movements peak around 35 and then decrease to around 30 (fatigue, boredom)
         
@@ -106,7 +105,7 @@ class Babybot:
     self.update_rates(moves)
     return moves
 
-  def one_cycle(self, n_minutes=25, connected=[False]*4+[True]*16+[False]*5):
+  def one_cycle(self, n_minutes=25, connected=False, non_contigent=False):
     r_arm_moves = []
     l_arm_moves = []
     r_leg_moves = []
@@ -127,6 +126,7 @@ class Babybot:
     for min in range(n_minutes):
       self.move_counter = [0, 0, 0, 0]
       self.connected = connected[min]
+      self.non_contigent = non_contigent[min]
       nr.append(self.rates[self.connected_limb])
       mr.append(self.rates_moving[self.connected_limb])
       for step in range(steps_per_min):
