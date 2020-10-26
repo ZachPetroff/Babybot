@@ -50,9 +50,9 @@ def simulate(rates, num_infants=100, num_sessions=1, connected_limb="right arm",
         if reversal:                                         # switches limb between sessions if reversal is turned on
             if infant == num_infants/2:
                 if babybot.connected_limb == "right arm":
-                    babybot.connected_limb = "left arm"
+                    babybot.connected_limb = 1
                 else:
-                    babybot.connected_limb = "right arm"
+                    babybot.connected_limb = 0
         
         ram, lam, rlm, llm, rae, lae, rle, lle, mins, cms, mms, nr, mr = babybot.one_cycle(n_minutes, connection)
         ram_mean += ram
