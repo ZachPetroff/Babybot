@@ -5,7 +5,7 @@ import main
 
 def simulate(rates, num_infants=100, num_sessions=1, connected_limb="right arm", timestep=1/120, baseline_time=10, aquisition_time=20, extinction_time=15, 
              reward=2e-2, reward_flux=0, cost=3.5e-2, expectation_growth=0, expectation_decay=0, 
-             mobile_on=False, non_contigent=False, nc_rate=.8, reversal=False):
+             mobile_on=False, mobile_window=.025, non_contigent=False, nc_rate=.8, reversal=False):
     
     connection = np.array([False]*baseline_time+[True]*aquisition_time+[False]*extinction_time)  # connection for each minute
     for session in range(num_sessions-1):
@@ -54,7 +54,7 @@ def simulate(rates, num_infants=100, num_sessions=1, connected_limb="right arm",
     rates=rates
     
     for infant in range(num_infants):
-        babybot = main.Babybot(baseline_rates=rates,reward=reward, reward_flux=reward_flux, cost=cost,expectation_growth=expectation_growth,expectation_decay=expectation_decay, connected_limb=connected_limb, timestep=timestep, non_contigent=non_contigent, nc_rate=nc_rate, mobile_on=mobile_on)
+        babybot = main.Babybot(baseline_rates=rates,reward=reward, reward_flux=reward_flux, cost=cost,expectation_growth=expectation_growth,expectation_decay=expectation_decay, connected_limb=connected_limb, timestep=timestep, non_contigent=non_contigent, nc_rate=nc_rate, mobile_on=mobile_on, mobile_window=mobile_window)
         
         if reversal:                                         # switches limb between sessions if reversal is turned on
             if infant == num_infants/2:
