@@ -25,7 +25,7 @@ class Mobile:
 class Babybot:
   def __init__(self, baseline_rates=[20, 20, 20, 20], reward=.06, reward_flux=0, cost=.06, expectation_growth=6e-9,
       expectation_decay=1.5, connected=False, connected_limb="right arm", timestep=1/60,
-      non_contigent=False, nc_rate=.8, mobile_on=True, mobile_window=0.025):
+      non_contigent=False, nc_rate=.8, mobile_on=True, mobile_window=0.025, reversal=False):
     self.baseline_rates = baseline_rates
     self.rates = baseline_rates # rates per minute of each limb moving
     if mobile_on and reward_flux != 0: # reward is the center of the distribution and reward_flux is the scale or width of the distribution
@@ -48,6 +48,8 @@ class Babybot:
     self.mobile_on = mobile_on # Determines whether the actions of the mobile will be taken into account
     self.mobile = Mobile(mobile_window) # An object created from the mobile class
     self.rates_moving = list(baseline_rates) # If the mobile dynamics are included, this keeps track of the rates while the mobile is moving
+    
+    self.reversal = reversal
     
   def update_rates(self, moves):
     # if the limb is connected, a reward is given and expectation for a reward grows
@@ -129,6 +131,14 @@ class Babybot:
       self.non_contigent = non_contigent[min]
       nr.append(self.rates[self.connected_limb])
       mr.append(self.rates_moving[self.connected_limb])
+      
+      if self.reversal:                      # if reversal is turned on, this reverses limb movement
+          if min == n_minutes/2:
+              if self.connected_limb == 0:
+                  self.connected_limb = 1
+              else:
+                  self.connected_limb = 0
+                  
       for step in range(steps_per_min):
         moves = self.move()
         connected_moves.append(moves[self.connected_limb])
