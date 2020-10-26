@@ -28,7 +28,10 @@ class Babybot:
       non_contigent=False, nc_rate=.8, mobile_on=True, mobile_window=0.025):
     self.baseline_rates = baseline_rates
     self.rates = baseline_rates # rates per minute of each limb moving
-    self.reward = [reward, reward_flux]  # reward is the center of the distribution and reward_flux is the scale or width of the distribution
+    if mobile_on and reward_flux != 0: # reward is the center of the distribution and reward_flux is the scale or width of the distribution
+        self.reward = [reward, mobile_window] # if the mobile movements are taken into account, reward will fluctuate as mobile movements fluctuate
+    else:
+        self.reward = [reward, reward_flux]  
     self.cost = cost # removal of rate per minute for each non-rewarded movement
     self.expectation = [0, 0, 0, 0] # subtracted from both reward and punishment
     self.expectation_growth = expectation_growth # growth of expectation for each rewarded movement
@@ -52,9 +55,6 @@ class Babybot:
       or (self.non_contigent and np.random.random() < self.nc_rate):  # if the extinction period is non contingent 
       for limb in range(len(self.limbs)):
         # creates the peaking effect shown in data, the movements peak around 35 and then decrease to around 30 (fatigue, boredom)
-        
-        if self.mobile_on and self.reward[1] != 0:      # determines whether reward is static or continuous for mobile experiments
-            self.reward[0] = self.mobile.reward_window
         
         self.rates[limb] += (np.random.normal(self.reward[0], self.reward[1]) - self.expectation[limb]) * moves[limb]  # increases rates if reward > expectation, decreases otherwise
         
