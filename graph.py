@@ -44,7 +44,7 @@ def plot_minute(minute, cms, mms, timestep):
     plt.title("Minute {}".format(str(minute)))
     plt.show()
     
-def plot_expectation(mins, reward, cost, rae_mean, lae_mean, rle_mean, lle_mean, connected_limb_index=1):
+def plot_expectation(mins, reward, cost, rae_mean, lae_mean, rle_mean, lle_mean, connected_limb_index=0):
     colors = []
     labels = []
     for limb in range(4):
