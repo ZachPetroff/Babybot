@@ -12,6 +12,15 @@ def simulate(rates, num_infants=100, num_sessions=1, connected_limb="right arm",
         connection = np.append(connection, connection[:baseline_time+aquisition_time+extinction_time])
     n_minutes = len(connection)
     
+    if non_contigent == True:
+        non_contigent = np.array([True]*baseline_time+[True]*aquisition_time+[False]*extinction_time)
+        for session in range(num_sessions-1):
+            non_contigent = np.append(non_contigent, non_contigent[:baseline_time+aquisition_time+extinction_time])
+    else:
+        non_contigent = np.array([False]*baseline_time+[False]*aquisition_time+[False]*extinction_time)
+        for session in range(num_sessions-1):
+            non_contigent = np.append(non_contigent, non_contigent[:baseline_time+aquisition_time+extinction_time])
+
     connection_labels = []
     prev_connection = False
     counter = 0
@@ -54,7 +63,7 @@ def simulate(rates, num_infants=100, num_sessions=1, connected_limb="right arm",
                 else:
                     babybot.connected_limb = 0
         
-        ram, lam, rlm, llm, rae, lae, rle, lle, mins, cms, mms, nr, mr = babybot.one_cycle(n_minutes, connection)
+        ram, lam, rlm, llm, rae, lae, rle, lle, mins, cms, mms, nr, mr = babybot.one_cycle(n_minutes, connection, non_contigent)
         ram_mean += ram
         lam_mean += lam
         rlm_mean += rlm
