@@ -5,7 +5,7 @@ import main
 
 def simulate(rates, num_infants=100, num_sessions=1, connected_limb="right arm", timestep=1/120, baseline_time=10, aquisition_time=20, extinction_time=15, 
              reward=2e-2, reward_flux=0, cost=3.5e-2, expectation_growth=0, expectation_decay=0, 
-             mobile_on=False, mobile_window=.025, non_contigent=False, nc_rate=.8, reversal=False):
+             mobile_on=False, mobile_window=.025, non_contigent=False, nc_rate=.8, reversal=False, learning_lag=1):
     
     connection = np.array([False]*baseline_time+[True]*aquisition_time+[False]*extinction_time)  # connection for each minute
     for session in range(num_sessions-1):
