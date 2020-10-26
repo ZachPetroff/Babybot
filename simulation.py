@@ -13,7 +13,7 @@ def simulate(rates, num_infants=100, num_sessions=1, connected_limb="right arm",
     n_minutes = len(connection)
     
     if non_contigent == True:
-        non_contigent = np.array([True]*baseline_time+[True]*aquisition_time+[False]*extinction_time)
+        non_contigent = np.array([False]*baseline_time+[False]*aquisition_time+[True]*extinction_time)
         for session in range(num_sessions-1):
             non_contigent = np.append(non_contigent, non_contigent[:baseline_time+aquisition_time+extinction_time])
     else:
