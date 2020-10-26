@@ -54,14 +54,7 @@ def simulate(rates, num_infants=100, num_sessions=1, connected_limb="right arm",
     rates=rates
     
     for infant in range(num_infants):
-        babybot = main.Babybot(baseline_rates=rates,reward=reward, reward_flux=reward_flux, cost=cost,expectation_growth=expectation_growth,expectation_decay=expectation_decay, connected_limb=connected_limb, timestep=timestep, non_contigent=non_contigent, nc_rate=nc_rate, mobile_on=mobile_on, mobile_window=mobile_window)
-        
-        if reversal:                                         # switches limb between sessions if reversal is turned on
-            if infant == num_infants/2:
-                if babybot.connected_limb == "right arm":
-                    babybot.connected_limb = 1
-                else:
-                    babybot.connected_limb = 0
+        babybot = main.Babybot(baseline_rates=rates,reward=reward, reward_flux=reward_flux, cost=cost,expectation_growth=expectation_growth,expectation_decay=expectation_decay, connected_limb=connected_limb, timestep=timestep, non_contigent=non_contigent, nc_rate=nc_rate, mobile_on=mobile_on, mobile_window=mobile_window, reversal=reversal)
         
         ram, lam, rlm, llm, rae, lae, rle, lle, mins, cms, mms, nr, mr = babybot.one_cycle(n_minutes, connection, non_contigent)
         ram_mean += ram
