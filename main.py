@@ -141,7 +141,7 @@ class Babybot:
                   
       for step in range(steps_per_min):
         moves = self.move()
-        if step % self.learning == 0:
+        if step % self.learning_lag == 0:
             self.update_ranges(moves)
         connected_moves.append(moves[self.connected_limb])
         
