@@ -141,8 +141,7 @@ class Babybot:
                   
       for step in range(steps_per_min):
         moves = self.move()
-        if step % self.learning_lag == 0:
-            self.update_rates(moves)
+        self.update_rates(moves)
         connected_moves.append(moves[self.connected_limb])
         
         if self.mobile.moving:           # updates mobile moves: 1 = moving, 0 = not moving
