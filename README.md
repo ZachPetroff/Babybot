@@ -15,7 +15,7 @@
  The code within this repository attempts to explore how extinction bursts arise: the cognitive mechanisms, the physical systems, and the interplay 
  between the two.
  
- # Violation of Expectancy and Frustration
+ # [Violation of Expectancy and Frustration](https://github.com/ZachPetroff/Babybot/blob/master/examples/Expectation.ipynb)
   In many of the Mobile-Paradigm studies that followed the original, researchers reported frustration on the faces of the infants during
 disconnect phase. This seems to be an appropriate response, if one expects a reward following a certain action and that reward is not given,
 the most obvious reaction is that of frustration. Thus, one way we modeled extinction bursts is by modeling frustration in terms of 
