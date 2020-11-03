@@ -25,9 +25,17 @@ reward is no longer given, feelings of frustration begin to bubble-up. We all ha
 small rewards, that in their absence, fill us with a greater want than when they were attainable. This was the intuition behind this model
 of the "babybot".
  
- # Mobile Dynamics
+ # [Mobile Dynamics](https://github.com/ZachPetroff/Babybot/blob/master/examples/Mobile_Dynamics.ipynb)
   The intuition behind this approach is that there are certain times during the connected phase when there is
   no additional reward for moving the connected limb; rather, there is a cost. The contingent reward for the connected
   limb is given once the mobile begins to move. However, the mobile continues to swing some time after the connected limb 
   moves. During this phase, moving the connected arm would provide no additional reward. If we assume that the infant, 
   in a sense, wants to be as "efficient" as possible, then movement during this window of time should be disencouraged.
+  
+  **Exploring Further Model Set-ups and Biological Constraints**
+  - [Interactive Widget](https://github.com/ZachPetroff/Babybot/blob/master/Interactive.ipynb)
+  - [Basic Learning Model](https://github.com/ZachPetroff/Babybot/blob/master/examples/No_Extinction_Burst.ipynb)
+  - [Multiple Sessions](https://github.com/ZachPetroff/Babybot/blob/master/examples/Multiple_Sessions.ipynb)
+  - [Limb Reversal](https://github.com/ZachPetroff/Babybot/blob/master/examples/Limb_Reversal.ipynb)
+  - [Non-Contingent Extinction](https://github.com/ZachPetroff/Babybot/blob/master/examples/Non_Contingent_Extinction.ipynb)
+  - [Reward Fluctuation](https://github.com/ZachPetroff/Babybot/blob/master/examples/Reward_Fluctuation.ipynb)
